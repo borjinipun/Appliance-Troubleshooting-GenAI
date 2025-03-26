@@ -1,1 +1,3 @@
-# This is a placeholder file for utils/helpers.py
+def get_appliance_categories():
+    """Returns a list of supported appliance categories."""
+    return ["refrigerator", "washer", "dryer", "dishwasher", "oven", "stove", "microwave"]

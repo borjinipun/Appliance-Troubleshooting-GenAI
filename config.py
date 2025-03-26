@@ -1,1 +1,3 @@
-# This is a placeholder file for config.py
+class Config:
+    """Configuration settings for the application."""
+    DEBUG = True  # Enable debugging
