@@ -4,9 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appliance Troubleshooting</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Extend Tailwind for custom animations
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        fadeIn: "fadeIn 1s ease-in-out"
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            "0%": { opacity: 0 },
+                            "100%": { opacity: 1 }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <h1>Welcome to Appliance Troubleshooting AI</h1>
-    <p>Enter your appliance problem to get AI-based solutions.</p>
+<body class="bg-gray-200 flex items-center justify-center min-h-screen">
+
+    <!-- Main Content Container -->
+    <div class="max-w-lg mx-auto mt-10 p-5 bg-white shadow-lg rounded-lg 
+                animate-fadeIn"> 
+        <h1 class="text-2xl font-bold text-center text-blue-600">
+            Appliance Troubleshooting
+        </h1>
+        
+        <!-- Form -->
+        <form id="troubleshoot-form" class="mt-4">
+            <input type="text" id="issue-input" class="w-full p-2 border rounded mb-3" 
+                   placeholder="Describe the issue..." required>
+            
+            <!-- Submit Button -->
+            <button id="submit-btn" class="w-full bg-blue-500 text-white py-2 rounded 
+                   hover:bg-blue-600 transition">
+                Submit
+            </button>
+        </form>
+
+        <!-- Loading Spinner (Initially Hidden) -->
+        <div id="loading" class="text-center mt-3 hidden">
+            <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500"></div>
+            <p class="mt-2 text-blue-500">Processing...</p>
+        </div>
+
+        <!-- Results Section (Initially Hidden) -->
+        <div id="results" class="mt-5 hidden p-4 bg-gray-100 rounded">
+            <h2 class="text-lg font-semibold">Diagnosis:</h2>
+            <p id="result-text" class="mt-2 text-gray-700">
+                <!-- UPDATE HERE: AI-generated troubleshooting response will be inserted here -->
+            </p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("submit-btn").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const issueInput = document.getElementById("issue-input").value.trim();
+            if (!issueInput) return; // Prevent empty submissions
+
+            // Show the loading animation
+            document.getElementById("loading").classList.remove("hidden");
+
+            // Simulate AI response delay (1.5 sec) then show results
+            setTimeout(() => {
+                document.getElementById("loading").classList.add("hidden"); // Hide loading
+                document.getElementById("results").classList.remove("hidden"); // Show results
+                
+                <script>
+document.getElementById("submit-btn").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const issueInput = document.getElementById("issue-input").value.trim();
+    if (!issueInput) return; // Prevent empty submissions
+
+    document.getElementById("loading").classList.remove("hidden"); // Show spinner
+
+    // Send issue to Flask backend
+    fetch('/troubleshoot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ issue: issueInput })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("loading").classList.add("hidden"); // Hide spinner
+        document.getElementById("results").classList.remove("hidden"); // Show results
+        document.getElementById("result-text").innerText = data.response; // Show AI response
+        document.getElementById("results").scrollIntoView({ behavior: "smooth" }); // Scroll to results
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("result-text").innerText = "Error retrieving response. Please try again.";
+        document.getElementById("results").classList.remove("hidden");
+    });
+});
+</script>
+
+                // Smoothly scroll to results
+                document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+            }, 1500);
+        });
+    </script>
+
 </body>
 </html>
